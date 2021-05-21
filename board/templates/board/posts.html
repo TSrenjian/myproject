@@ -1,0 +1,39 @@
+{% extends 'board/base.html' %}
+{% block title %}
+  {{ board.name }} - {{ block.super }}
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'home' %}">Boards</a></li>
+  <li class="breadcrumb-item active"><a href="{% url 'board_topics' board.pk %}">{{ board.name }}</a></li>
+    <li class="breadcrumb-item active">{{ topic.subject }}</li>
+{% endblock %}
+
+{% block content %}
+    <div class="mb-4">
+        <a href="{% url 'new_post' board.pk topic.pk %}" class="btn btn-primary">New post</a>
+{#  {% url 'new_post' topic.pk %} 给new_post 传入的参数。  #}
+    </div>
+  <table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Post</th>
+        <th>Starter</th>
+        <th>Replies</th>
+        <th>Views</th>
+        <th>Update Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for post in topic.posts.all %}
+        <tr>
+          <td>{{ post.message }}</td>
+          <td>{{ post.created_by }}</td>
+          <td>0</td>
+          <td>0</td>
+          <td>{{ post.created_at }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'board/base.html' %}
+{% load widget_tweaks %}
+
+{% block title %} Login {% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item">请登录</li>
+{% endblock %}
+
+{% block content %}
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    {#警告信息 #}
+    {% if message %}
+    <div class="alert alert-warning">{{ message }}</div>
+    {% endif  %}
+
+
+    {% for field in login_form %}
+      <div class="form-group">
+        {{ field.label_tag }}
+
+        {% render_field field class="form-control" %}
+
+        {% if field.help_text %}
+          <small class="form-text text-muted">
+            {{ field.help_text }}
+          </small>
+        {% endif %}
+      </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-success">登录</button>
+  </form>
+{% endblock %}
